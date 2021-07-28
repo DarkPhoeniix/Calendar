@@ -35,5 +35,10 @@ public:
 	friend std::istream& operator>>(std::istream& in, Date& date);
 	friend std::ostream& operator<<(std::ostream& out, const Date& date);
 	friend bool operator<(const Date& lhs, const Date& rhs);
+	friend bool operator>(const Date& lhs, const Date& rhs);
+	friend bool operator<=(const Date& lhs, const Date& rhs);
+	friend bool operator>=(const Date& lhs, const Date& rhs);
+	friend bool operator==(const Date& lhs, const Date& rhs);
+	friend bool operator!=(const Date& lhs, const Date& rhs);
 };
 

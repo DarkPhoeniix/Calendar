@@ -90,11 +90,56 @@ std::ostream& operator<<(std::ostream& out, const Date& date)
 				<< std::setw(2) << std::setfill('0') << date.day_;
 }
 
-// Comparison operator
+// Comparison operator<
 // Returns is left object less than right object
 // Gets two constant Date object references
 bool operator<(const Date& lhs, const Date& rhs)
 {
 	return	std::tie(lhs.year_, lhs.month_, lhs.day_) < 
+			std::tie(rhs.year_, rhs.month_, rhs.day_);
+}
+
+// Comparison operator>
+// Returns is left object greater than right object
+// Gets two constant Date object references
+bool operator>(const Date& lhs, const Date& rhs)
+{
+	return	std::tie(lhs.year_, lhs.month_, lhs.day_) >
+			std::tie(rhs.year_, rhs.month_, rhs.day_);
+}
+
+// Comparison operator<=
+// Returns is left object less or equal to the right object
+// Gets two constant Date object references
+bool operator<=(const Date& lhs, const Date& rhs)
+{
+	return	std::tie(lhs.year_, lhs.month_, lhs.day_) <=
+			std::tie(rhs.year_, rhs.month_, rhs.day_);
+}
+
+// Comparison operator>=
+// Returns is left object greater or equal to the right object
+// Gets two constant Date object references
+bool operator>=(const Date& lhs, const Date& rhs)
+{
+	return	std::tie(lhs.year_, lhs.month_, lhs.day_) >=
+			std::tie(rhs.year_, rhs.month_, rhs.day_);
+}
+
+// Comparison operator==
+// Returns is left object equal to the right object
+// Gets two constant Date object references
+bool operator==(const Date& lhs, const Date& rhs)
+{
+	return	std::tie(lhs.year_, lhs.month_, lhs.day_) ==
+			std::tie(rhs.year_, rhs.month_, rhs.day_);
+}
+
+// Comparison operator!=
+// Returns is left object not equal to the right object
+// Gets two constant Date object references
+bool operator!=(const Date& lhs, const Date& rhs)
+{
+	return	std::tie(lhs.year_, lhs.month_, lhs.day_) !=
 			std::tie(rhs.year_, rhs.month_, rhs.day_);
 }
