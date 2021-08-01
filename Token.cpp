@@ -23,51 +23,56 @@ std::vector<Token> tokenize(std::istream& in)
             } else {
                 throw std::logic_error("Unknown token");
             }
-        } else if (isDigit(in.peek())) {
-            Date date;
-            std::stringstream ss;
-            ss >> date;
-            tokens.push_back({ ss.str(), TokenType::DATE });
-        } else if (in.get() == '(') {
+        } else if (isDigit(c)) {
+            std::string s;
+            in >> s;
+            tokens.push_back({ c + s, TokenType::DATE });
+        } else if (c == '(') {
             tokens.push_back({ "(", TokenType::PARENT_LEFT });
-        } else if (in.get() == ')') {
+        } else if (c == ')') {
             tokens.push_back({ ")", TokenType::PARENT_RIGHT });
-        } else if (in.get() == '<') {
+        } else if (c == '<') {
             if (in.get() == '=') {
                 tokens.push_back({ "<=", TokenType::COMPARE_OP });
             } else {
                 tokens.push_back({ "<", TokenType::COMPARE_OP });
             }
-        } else if (in.get() == '>') {
+        } else if (c == '>') {
             if (in.get() == '=') {
                 tokens.push_back({ ">=", TokenType::COMPARE_OP });
             } else {
                 tokens.push_back({ ">", TokenType::COMPARE_OP });
             }
-        } else if (in.get() == '=') {
+        } else if (c == '=') {
             if (in.get() == '=') {
                 tokens.push_back({ "==", TokenType::COMPARE_OP });
             } else {
                 throw std::logic_error("Unknown token");
             }
-        } else if (in.get() == '!') {
+        } else if (c == '!') {
             if (in.get() == '=') {
                 tokens.push_back({ "!=", TokenType::COMPARE_OP });
             } else {
                 throw std::logic_error("Unknown token");
             }
-        } else if (in.get() == 'A') {
+        } else if (c == 'A') {
             if (in.get() == 'N' && in.get() == 'D') {
                 tokens.push_back({ "AND", TokenType::LOGICAL_OP });
             } else {
                 throw std::logic_error("Unknown token");
             }
-        } else if (in.get() == 'O') {
+        } else if (c == 'O') {
             if (in.get() == 'R') {
                 tokens.push_back({ "OR", TokenType::LOGICAL_OP });
             } else {
                 throw std::logic_error("Unknown token");
             }
+        } else if (c == '"') {
+            std::string eventName;
+            std::getline(in, eventName, '"');
+            tokens.push_back({ eventName, TokenType::EVENT });
+        } else if (c == ' ') {
+            continue;
         }
     }
 
