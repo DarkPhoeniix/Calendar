@@ -103,11 +103,9 @@ public:
 
 // CLASS EmptyNode
 // Subclass for empty nodes with event comparison
-// Creates if conditions is empty
 class EmptyNode : public Node
 {
 public:
-	// Return true while evaluating
 	virtual bool evaluate(const Date& date, 
 						  const std::string& eventName) const override;
 };

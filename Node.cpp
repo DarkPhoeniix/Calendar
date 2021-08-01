@@ -71,7 +71,6 @@ bool EventComparisonNode::evaluate(const Date& date,
 
 
 
-// Return true while evaluating
 bool EmptyNode::evaluate(const Date& date, 
 						 const std::string& eventName) const
 {
