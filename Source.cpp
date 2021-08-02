@@ -50,10 +50,6 @@ int main()
 						std::cout << date << ' ' << eventName << std::endl;
 					}
 				}
-				//std::cin >> date;
-				//for (const auto& item : dataBase.find(date)) {
-				//	std::cout << date << ' ' << item << std::endl;
-				//}
 			}
 			else if (command == "Print") {
 				dataBase.print();
