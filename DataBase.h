@@ -2,6 +2,7 @@
 #pragma once
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <map>
 #include <set>
@@ -10,44 +11,49 @@
 
 
 
-// CLASS DataBase
+// CLASS Database
 // Contains pairs <Date, Event> and provide an interface to interact 
-// with database
-class DataBase
+// with Database
+class Database
 {
 private:
-	std::map<Date, std::vector<std::string>> dataBase_;
+	std::map<Date, std::vector<std::string>> database_;
 
 public:
 	// Default constructor
-	DataBase();
+	Database();
 	// Destructor
-	~DataBase();
+	~Database();
 
-	// Insert pair <date, eventName> in database
+	// Insert pair <date, eventName> in Database
 	void add(const Date& date, const std::string& eventName);
 	// Delete pairs <date, eventName> if they satisfy the predicate
-	// Return number of deleted elements from database
+	// Return number of deleted elements from Database
 	template<class Predicate>
 	int removeIf(Predicate predicate);
 	// Find pairs <date, eventName> if they satusfy the predicate
-	// Return copies of specified pairs from dataBase
+	// Return copies of specified pairs from Database
 	template<class Predicate>
 	std::map<Date, std::vector<std::string>> findIf(Predicate predicate);
-	// Print all pairs <Date, Event>
+	// Print all pairs <date, eventName>
 	void print() const;
+	// Save all pairs <date, eventName> from database to specified file
+	void saveDatabaseToFile(const std::string& fileName = "data.txt") const;
+	// Read and save all pairs <date, eventName> from specidied file to 
+	// current database
+	void readDatabaseFromFile(const std::string& fileName = "data.txt");
 };
 
 
 
 // Delete pairs <date, eventName> if they satisfy the predicate
-// Return number of deleted elements from database
+// Return number of deleted elements from Database
 template<class Predicate>
-inline int DataBase::removeIf(Predicate predicate)
+inline int Database::removeIf(Predicate predicate)
 {
 	int numOfDeleted = 0;
 
-	for (auto& [date, events] : dataBase_) {
+	for (auto& [date, events] : database_) {
 		auto toDelete = [predicate, date, &numOfDeleted](std::string eventName)
 		{
 			if (predicate(date, eventName)) {
@@ -63,13 +69,13 @@ inline int DataBase::removeIf(Predicate predicate)
 }
 
 // Find pairs <date, eventName> if they satusfy the predicate
-// Return copies of specified pairs from dataBase
+// Return copies of specified pairs from Database
 template<class Predicate>
-inline std::map<Date, std::vector<std::string>> DataBase::findIf(Predicate predicate)
+inline std::map<Date, std::vector<std::string>> Database::findIf(Predicate predicate)
 {
 	std::map<Date, std::vector<std::string>> result;
 
-	for (auto& [date, events] : dataBase_) {
+	for (auto& [date, events] : database_) {
 		for (auto& eventName : events) {
 			if (predicate(date, eventName)) {
 				result[date].push_back(eventName);
