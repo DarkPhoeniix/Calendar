@@ -3,15 +3,17 @@
 #include <numeric>
 
 #include "Condition_Parser.h"
-#include "DataBase.h"
+#include "Database.h"
 #include "Node.h"
 
 int main()
 {
 	Date date;
-	DataBase dataBase;
+	Database database;
 	std::string command;
 	std::string eventName;
+
+	database.readDatabaseFromFile();
 
 	for (std::string line; getline(std::cin, line); ) {
 		std::istringstream iss(line);
@@ -22,7 +24,7 @@ int main()
 				while (!iss.eof()) {
 					eventName += iss.get();
 				}
-				dataBase.add(date, eventName);
+				database.add(date, eventName);
 			}
 			else if (command == "Del") {
 				std::shared_ptr<Node> root = parseCondition(iss);
@@ -30,7 +32,8 @@ int main()
 					{ 
 						return root->evaluate(date, eventName); 
 					};
-				std::cout << "Deleted " << dataBase.removeIf(pred) << " events" << std::endl;
+				std::cout << "Deleted " << database.removeIf(pred) << " events" 
+						  << std::endl;
 			}
 			else if (command == "Find") {
 				std::shared_ptr<Node> root = parseCondition(iss);
@@ -38,7 +41,7 @@ int main()
 				{
 					return root->evaluate(date, eventName);
 				};
-				auto foundEvents = dataBase.findIf(pred);
+				auto foundEvents = database.findIf(pred);
 				int num = 0;
 				std::for_each(foundEvents.begin(), 
 							  foundEvents.end(), 
@@ -52,7 +55,7 @@ int main()
 				}
 			}
 			else if (command == "Print") {
-				dataBase.print();
+				database.print();
 			}
 			else if (command == "Exit") {
 				break;
@@ -65,6 +68,8 @@ int main()
 		}
 		command = "";
 	}
+
+	database.saveDatabaseToFile();
 
 	return 0;
 }
